@@ -29,22 +29,26 @@ app.use(rateLimiter); // Rate limiting to prevent abuse
 // ---------------------------
 const allowedOrigins = [
   "http://localhost:5173", // dev frontend
+  "http://localhost:5001",
   process.env.CORS_ORIGIN, // e.g. "https://yourdomain.com"
 ].filter(Boolean);
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (e.g., mobile apps, curl)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true, // Needed if cookies or sessions are used
-  })
-);
+if (process.env.NODE_ENV !== "production") {
+  app.use(
+    cors({
+      origin: function (origin, callback) {
+        console.log("Origin :", origin);
+        // development only
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+      credentials: true,
+    })
+  );
+}
 
 // ---------------------------
 // 3. API Routes

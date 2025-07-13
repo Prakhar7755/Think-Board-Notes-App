@@ -1,7 +1,6 @@
 {
-  "name": "project-x",
+  "name": "Think-Board-Notes-App",
   "version": "1.0.0",
-  "type": "module",
   "main": "index.js",
   "scripts": {
     "build": "npm install --prefix server && npm install --prefix client && npm run build --prefix client",
@@ -9,5 +8,6 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": ""
 }
