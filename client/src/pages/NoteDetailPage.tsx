@@ -1,13 +1,20 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
 import { ArrowLeftIcon, LoaderIcon, Trash2Icon } from "lucide-react";
 
-const NoteDetailPage = () => {
-  const [note, setNote] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+type Note = {
+  _id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+};
+
+const NoteDetailPage: React.FC = () => {
+  const [note, setNote] = useState<Note | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [saving, setSaving] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -28,7 +35,9 @@ const NoteDetailPage = () => {
   }, [id]);
 
   const handleDelete = async () => {
-    const confirmed = window.confirm("Are you sure you want to delete this note?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this note?"
+    );
     if (!confirmed) return;
 
     try {
@@ -74,7 +83,10 @@ const NoteDetailPage = () => {
             <ArrowLeftIcon className="w-5 h-5" />
             <span>Back to Notes</span>
           </Link>
-          <button onClick={handleDelete} className="btn btn-outline btn-error gap-2">
+          <button
+            onClick={handleDelete}
+            className="btn btn-outline btn-error gap-2"
+          >
             <Trash2Icon className="w-5 h-5" />
             <span>Delete</span>
           </button>
@@ -92,7 +104,12 @@ const NoteDetailPage = () => {
                 className="input input-bordered input-md"
                 placeholder="Note title"
                 value={note?.title ?? ""}
-                onChange={(e) => setNote({ ...note, title: e.target.value })}
+                onChange={(e) =>
+                  setNote((prevNote) => ({
+                    ...prevNote!,
+                    title: e.target.value,
+                  }))
+                }
               />
             </div>
 
@@ -105,7 +122,9 @@ const NoteDetailPage = () => {
                 className="textarea textarea-bordered min-h-[10rem]"
                 placeholder="Write your note here..."
                 value={note?.content ?? ""}
-                onChange={(e) => setNote({ ...note, content: e.target.value })}
+                 onChange={(e) =>
+                  setNote((prevNote) => ({ ...prevNote!, content: e.target.value }))
+                }
               />
             </div>
 

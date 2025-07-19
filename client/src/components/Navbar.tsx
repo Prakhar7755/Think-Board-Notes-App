@@ -1,7 +1,8 @@
+import React from "react";
 import { PlusIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar:React.FC = () => {
   return (
     <header className="bg-base-300 border-b border-base-content/10 ">
       <nav className="mx-auto max-w-6xl  p-4">

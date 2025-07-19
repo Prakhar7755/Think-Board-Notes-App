@@ -1,6 +1,7 @@
 import { ZapIcon } from "lucide-react";
+import React from "react";
 
-const RateLimitedUI = () => {
+const RateLimitedUI:React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="bg-primary/10 border border-primary/30 rounded-lg shadow-md">

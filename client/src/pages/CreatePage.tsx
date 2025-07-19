@@ -1,11 +1,11 @@
 import { ArrowLeftIcon } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-// import axios from "axios";
 import api from "../lib/axios";
+import { AxiosError } from "axios";
 
-const CreatePage = () => {
+const CreatePage: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ const CreatePage = () => {
   const navigate = useNavigate();
 
   // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!title.trim() || !content.trim()) {
@@ -39,12 +39,17 @@ const CreatePage = () => {
     } catch (err) {
       console.error("❌ Error while creating the note:", err);
 
-      if (err.response?.status === 429) {
-        toast.error("💀 Whoa! You're creating notes too quickly. Slow down!", {
-          duration: 4000,
-        });
-      } else {
-        toast.error("⚠️ Something went wrong. Couldn't create your note.");
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 429) {
+          toast.error(
+            "💀 Whoa! You're creating notes too quickly. Slow down!",
+            {
+              duration: 4000,
+            }
+          );
+        } else {
+          toast.error("⚠️ Something went wrong. Couldn't create your note.");
+        }
       }
     } finally {
       setLoading(false);

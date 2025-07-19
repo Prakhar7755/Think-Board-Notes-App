@@ -1,7 +1,8 @@
 import { NotebookIcon } from "lucide-react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-const NotesNotFound = () => {
+const NotesNotFound: React.FC = () => {
   return (
     <section className="min-h-[60vh] flex items-center justify-center px-4">
       <div className="max-w-lg w-full text-center space-y-6">
@@ -17,7 +18,8 @@ const NotesNotFound = () => {
 
         {/* Message */}
         <p className="text-gray-300 text-base leading-relaxed">
-          Looks like you haven’t created any notes yet. Start capturing your thoughts, tasks, or ideas — they’re just one click away.
+          Looks like you haven’t created any notes yet. Start capturing your
+          thoughts, tasks, or ideas — they’re just one click away.
         </p>
 
         {/* CTA */}

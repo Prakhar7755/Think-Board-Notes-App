@@ -1,4 +1,4 @@
-const formatDate = (date) => {
+const formatDate = (date: Date): string => {
   return date.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",

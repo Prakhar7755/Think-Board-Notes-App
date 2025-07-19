@@ -1,10 +1,10 @@
 {
-  "name": "Think-Board-Notes-App",
+  "name": "think-board-notes-app",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "npm install --prefix server && npm install --prefix client && npm run build --prefix client",
-    "start": "npm run start --prefix server"
+    "build": "yarn --cwd server install && yarn --cwd client install && yarn --cwd client build",
+    "start": "yarn --cwd server start"
   },
   "keywords": [],
   "author": "",

@@ -1,13 +1,30 @@
+import React from "react";
 import { PenSquareIcon, Trash2Icon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import formatDate from "../lib/utils";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
-const NoteCard = ({ note, setNotes }) => {
-  const navigate = useNavigate(); 
+type Note = {
+  _id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+};
 
-  const handleDelete = async (e, id) => {
+type NoteCardProps = {
+  note: Note;
+  setNotes: React.Dispatch<React.SetStateAction<Note[]>>;
+};
+
+const NoteCard: React.FC<NoteCardProps> = ({
+  note,
+  setNotes,
+}: NoteCardProps) => {
+  const navigate = useNavigate();
+
+  const handleDelete = async (e: React.FormEvent, id: string) => {
     e.stopPropagation();
     e.preventDefault();
 
@@ -22,10 +39,15 @@ const NoteCard = ({ note, setNotes }) => {
       toast.success("🗑️ Note deleted successfully!");
     } catch (err) {
       console.error("❌ Error deleting note:", err);
-      if (err.response?.status === 404) {
-        toast.error("⚠️ Note not found. It might have already been deleted.");
+      if (err instanceof AxiosError) {
+        // Now we can safely access AxiosError properties
+        if (err.response?.status === 404) {
+          toast.error("⚠️ Note not found. It might have already been deleted.");
+        } else {
+          toast.error("🚫 Failed to delete note. Please try again.");
+        }
       } else {
-        toast.error("🚫 Failed to delete note. Please try again.");
+        toast.error("🚫 Something went wrong. Please try again.");
       }
     }
   };
